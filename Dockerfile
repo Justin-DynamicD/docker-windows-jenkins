@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 #set envirnoment vars
-ENV JENKINS_HOME c:\jenkins
+ENV JENKINS_HOME c:\jenkins_home
 ENV JAVA_HOME c:\java
 
 #Download required files
@@ -12,6 +12,7 @@ ADD http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185 C:/install/
 RUN powershell start-process -filepath C:\install\jre.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\java,/L,install64.log"
 
 #cleanup
+RUN mkdir c:\jenkins_home
 RUN rmdir /s /q C:\install
 
 #run jenkins
