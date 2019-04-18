@@ -25,6 +25,4 @@ if (!(Test-Path $destinationJDK)) {
     Invoke-WebRequest -Uri $jdkurl -OutFile $destinationJDK
 }
 
-
 docker build . -t dynamicd/jenksinci:v1
-docker run -i -t --name jenkins dynamicd/jenksinci:v1 powershell.exe

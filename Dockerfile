@@ -6,10 +6,14 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 ADD ./artifacts/jenkins.msi C:/
 ADD ./artifacts/jdk.exe C:/
 
+#Enable IIS
+#--------------------
+RUN dism.exe /online /enable-feature /all /featurename:iis-webserver /NoRestart
+
 #Install Java
 #--------------------
 RUN powershell start-process -filepath C:\jdk.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\Java\jre1.8.0_91,/L,install64.log"
-#RUN C:\\installers\jdk.exe /s INSTALLDIR=C:\\Java /L install64.log
+#RUN C:\jdk.exe /s INSTALLDIR=c:\Java\jre1.8.0_91 /L install64.log
 RUN del C:\jdk.exe
 
 #Install Jenkins
