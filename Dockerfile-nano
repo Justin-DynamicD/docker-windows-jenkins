@@ -1,21 +1,19 @@
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+#Target Nano Container
+#----------------------
+FROM mcr.microsoft.com/windows/nanoserver:1809
 
-#set envirnoment vars
-ENV JENKINS_HOME c:\jenkins
-ENV JAVA_HOME c:\java
-
-#Download required files
+# copy files from the builder
 ADD http://mirrors.jenkins.io/war-stable/latest/jenkins.war C:/jenkins/jenkins.war
 ADD http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185 C:/install/jre.exe
 
 #Install Java
-RUN powershell start-process -filepath C:\install\jre.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\java,/L,install64.log"
+RUN C:\install\jre.exe /s INSTALLDIR=c:\Java\jre1.8.0_91 /L install64.log
 
 #cleanup
-RUN rmdir /s /q C:\install
+RUN powershell -command rm -Recurse C:\install -Force
 
 #run jenkins
-CMD c:\java\bin\java -jar c:\jenkins\jenkins.war
+CMD ["java","-jar","c:\\jenkins\\jenkins.war"]
 
 # LABEL must be last for proper base image discoverability
 LABEL maintainer="justin.dynamicd@gmail.com"
