@@ -1,2 +1,3 @@
 # docker-windows-jenkins
-Windows Container for Jenkins
+
+Dockerfile for creating Jenkins in Windows container.
