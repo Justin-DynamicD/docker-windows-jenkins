@@ -4,19 +4,21 @@ Dockerfile for creating Jenkins in Windows container.
 
 ## Building Container
 
-The build is "wrapped" in powershell to pre-download binaries.  This is being done as commands are limited in Nano, so pre-work is done outside the container.
+Jenkins is delivered as an MSI, which won't install on nano, so this uses servercore.  will experiement later with manual jenkins installation processes to srink this further.
 
 ```powershell
-.\build.ps1
+docker build . -t dynamicd/jenksinci:v1
 ```
 
 ## Running Jenkins
+
+Must export port 8080 to loginto jenkins.
 
 ```powershell
 docker run -dit -p 8080:8080 --name jenkins dynamicd/jenksinci:v1
 ```
 
-## Getting the inital password:
+## Getting the inital password
 
 can be pulled by typing out the inital password file.
 
