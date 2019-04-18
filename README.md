@@ -12,10 +12,10 @@ docker build . -t dynamicd/jenksinci:v1
 
 ## Running Jenkins
 
-Must expose port 8080 to be able to access jenkins.
+Jenkins administration occurs on port 8080.  In addition, all persistant files are stored on `c:\jenkins_home` on the container.  Therefore, the simplest way to launc hthe container is to port map and volume map as below:
 
 ```powershell
-docker run -d -p 8080:8080 --name jenkins dynamicd/jenksinci:v1
+docker run -d -p 8080:8080 -v C:/jenkins_home:C:/jenkins_home --name jenkins dynamicd/jenksinci:v1
 ```
 
 ## Getting the inital password
@@ -23,7 +23,5 @@ docker run -d -p 8080:8080 --name jenkins dynamicd/jenksinci:v1
 can be pulled by typing out the inital password file.
 
 ```powershell
-docker exec -it jenkins powershell
-type "c:\jenkins\secrets\initialAdminPassword"
-exit
+type "c:\jenkins_home\secrets\initialAdminPassword"
 ```

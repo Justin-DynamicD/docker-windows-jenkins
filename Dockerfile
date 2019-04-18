@@ -12,12 +12,13 @@ ADD http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185 C:/install/
 RUN powershell start-process -filepath C:\install\jre.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\java,/L,install64.log"
 
 #cleanup
-RUN mkdir c:\jenkins_home
 RUN rmdir /s /q C:\install
 
-#run jenkins
+#bootstrap jenkins
 CMD c:\java\bin\java -jar c:\jenkins\jenkins.war
 
-# LABEL must be last for proper base image discoverability
+# LABEL and EXPOSE to document runtime settings
+VOLUME c:/jenkins_home
+EXPOSE 8080/tcp
 LABEL maintainer="justin.dynamicd@gmail.com"
 LABEL description="Jenkinsci for Windows"
