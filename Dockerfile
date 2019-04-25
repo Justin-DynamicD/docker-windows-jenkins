@@ -1,27 +1,22 @@
-#start builder container to prep java
-FROM mcr.microsoft.com/windows/servercore:1809 as builder
-
-#set envirnoment vars
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
-#Download and install java
-ADD http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185 C:/install/jre.exe
-RUN start-process -filepath C:\install\jre.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\Java,/L,install64.log"
-
 # start nano container
 FROM mcr.microsoft.com/windows/nanoserver:1809
 
-#copy unzipped files and download remaining
-COPY --from=builder c:/java c:/java
+#Download required files
+ADD https://download.java.net/java/ga/jdk11/openjdk-11_windows-x64_bin.zip C:/install/java.zip
 ADD http://mirrors.jenkins.io/war-stable/latest/jenkins.war C:/jenkins/jenkins.war
 
-#set environment variables for Jenkins
-ENV JENKINS_HOME c:\\jenkins_home
+#Unzip and configure Java
+RUN tar -C C:\ -xvf C:\install\java.zip
+RUN ren jdk-11 java
 ENV JAVA_HOME c:\\java
 ENV PATH C:\\java\\bin;C:\\Windows\\system32;C:\\Windows;
 
+#set environment variables for Jenkins
+ENV JENKINS_HOME c:\\jenkins_home
+ENV JAVA_TOOL_OPTIONS -Djava.awt.headless=true -Djava.library.path=c:\\java\\bin
+
 #bootstrap jenkins
-CMD c:\java\bin\java -jar c:\jenkins\jenkins.war
+CMD c:\java\bin\java.exe -jar c:\jenkins\jenkins.war
 
 # LABEL and EXPOSE to document runtime settings
 VOLUME c:/jenkins_home
