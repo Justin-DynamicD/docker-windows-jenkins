@@ -1,13 +1,23 @@
-# #start builder container to prep java
+###
+# start builder container 
+###
+
 FROM mcr.microsoft.com/windows/servercore:1809 as builder
 
-#Download and install Java into builder so java can be copied
+#Download and install Java
 ADD http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185 C:/install/jre.exe
 RUN powershell start-process -filepath C:\install\jre.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\java,/L,install64.log"
-RUN openssl s_client -connect google.com:443 –servername google.com:443 < NUL | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > public.crt
 
+# Add LetsEncrypt certificates into Java cert trust for Jenkins extension downloads
+ADD https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt C:/install/letsencryptauthorityx3a.crt
+ADD https://letsencrypt.org/certs/letsencryptauthorityx3.pem.txt C:/install/letsencryptauthorityx3b.crt
+RUN C:\java\bin\keytool -import -alias letsencryptauthorityx3a -keystore C:\java\lib\security\cacerts -storepass changeit -file C:/install/letsencryptauthorityx3a.crt -noprompt
+RUN C:\java\bin\keytool -import -alias letsencryptauthorityx3b -keystore C:\java\lib\security\cacerts -storepass changeit -file C:/install/letsencryptauthorityx3b.crt -noprompt
 
+###
 # start nano container
+###
+
 FROM mcr.microsoft.com/windows/nanoserver:1809
 
 #Copy and configure Java
