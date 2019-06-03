@@ -6,9 +6,11 @@
 trigger:
 - master
 
-- job: Windows
-  pool:
-    vmImage: 'windows-2019'
-  steps:
-  - script: docker build . -t dynamicd/jenksinci:v1
-    displayName: 'Run docker build'
+stages:
+- stage: Build
+  jobs:
+  - job: Docker-Build
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+    - script: docker build . -t dynamicd/jenksinci:v1
