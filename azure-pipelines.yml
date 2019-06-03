@@ -30,6 +30,5 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(dynamicd)/$(dockerrepo)
-              tags: |
-                $(dockerrepo)
-                $(dockername)/$(dockerrepo)
+              tags: $(dockername)/$(dockerrepo)
+              
