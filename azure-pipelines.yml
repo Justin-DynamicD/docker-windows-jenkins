@@ -9,7 +9,7 @@ trigger:
 stages:
 - stage: Build
   jobs:
-  - job: Docker-Build
+  - job: Docker_Build
     pool:
       vmImage: 'windows-2019'
     steps:
