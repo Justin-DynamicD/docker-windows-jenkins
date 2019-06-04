@@ -40,7 +40,7 @@ stages:
           - task: GitHubRelease@0
             displayName: update release info on GitHub
             inputs:
-              gitHubConnection: Justin-DynamicD
+              gitHubConnection: GitHub-PAT
               repositoryName: $(dockerrepo)
               action: create
               tagSource: manual
