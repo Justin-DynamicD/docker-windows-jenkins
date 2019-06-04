@@ -7,9 +7,12 @@ trigger:
   - master
 
 variables: 
-  dockerrepo: winjenkins
-  dockername: dynamicd
-
+  dockerrepo: dynamicd/winjenkins
+  majorMinorVersion: 1.0
+  # semanticVersion counter is automatically incremented by one in each execution of pipeline
+  # second parameter is seed value to reset to every time the referenced majorMinorVersion is changed
+  semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
+  
 stages:
   - stage: buildAndPush
     jobs:
@@ -28,4 +31,4 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(dockerrepo)
-              tags: $(dockerrepo)
+              tags: $(dockerrepo):$(majorMinorVersion).$(semanticVersion)
