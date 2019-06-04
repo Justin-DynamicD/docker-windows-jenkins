@@ -22,12 +22,10 @@ stages:
             inputs:
               command: login
               containerRegistry: DockerHub
-              repository: $(dockername)/$(dockerrepo)
+              repository: $(dockerrepo)
           - task: Docker@2
             displayName: Build and Push
             inputs:
               command: buildAndPush
-              repository: $(dockername)/$(dockerrepo)
-              tags: |
-                $(dockerrepo)
-                $(dockername)/$(dockerrepo)
+              repository: $(dockerrepo)
+              tags: $(dockerrepo)
