@@ -31,4 +31,4 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(dockerrepo)
-              tags: $(dockerrepo):$(majorMinorVersion).$(semanticVersion)
+              tags: dynamicd/winjenkins:$(majorMinorVersion).$(semanticVersion)
