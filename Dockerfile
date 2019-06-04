@@ -46,4 +46,4 @@ CMD c:\java\1.8.0_91\bin\java.exe -jar c:\jenkins\jenkins.war
 VOLUME c:/jenkins_home
 EXPOSE 8080/tcp
 LABEL maintainer="justin.dynamicd@gmail.com"
-LABEL description="Jenkinsci for Windows"
+LABEL description="Jenkins for Windows"
