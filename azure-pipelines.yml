@@ -31,3 +31,16 @@ stages:
               command: buildAndPush
               repository: $(dockerrepo)
               tags: $(majorMinorVersion).$(semanticVersion)
+  - stage: Release Update
+    jobs:
+      - job: ReleaseUpdate
+        pool:
+          vmImage: 'windows-2019'
+        steps:
+          - task: GitHubRelease@0
+            inputs:
+              gitHubConnection: Justin-DynamicD
+              repositoryName: $(dockerrepo)
+              action: create
+              tagSource: manual
+              tag: $(majorMinorVersion).$(semanticVersion)
