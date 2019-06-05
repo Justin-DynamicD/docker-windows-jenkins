@@ -40,14 +40,3 @@ stages:
               command: push
               repository: $(dockerrepo)
               tags: v$(majorMinorVersion).$(semanticVersion)
-          - task: GitHubRelease@0
-            displayName: update release info on GitHub
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-            inputs:
-              gitHubConnection: GitHub-PAT
-              repositoryName: $(dockerrepo)
-              action: create
-              target: $(Build.SourceVersion)
-              tagSource: manual
-              tag: v$(majorMinorVersion).$(semanticVersion)
-              Assets:
