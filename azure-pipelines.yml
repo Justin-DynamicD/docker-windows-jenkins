@@ -47,5 +47,7 @@ stages:
               gitHubConnection: GitHub-PAT
               repositoryName: $(dockerrepo)
               action: create
+              target: $(Build.SourceVersion)
               tagSource: manual
               tag: v$(majorMinorVersion).$(semanticVersion)
+              Assets:
