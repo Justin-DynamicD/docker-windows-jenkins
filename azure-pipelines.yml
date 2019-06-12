@@ -14,6 +14,22 @@ variables:
   semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
 
 stages:
+  - stage: gatherCurrentBuildInfo
+    jobs:
+      - job: Gather Current Releases
+        pool:
+          vmImage: 'windows-2019'
+        steps:
+          - task: PowerShell@2
+            displayName: Get Latest Version of NanoServer
+            inputs:
+              type: inline
+              script: |
+                $results = (invoke-webrequest https://mcr.microsoft.com/v2/windows/nanoserver/tags/list).Content | ConvertFrom-Json
+                $nanoversion = ($results.tags | where { $_.length -eq 4 } | Sort-object -Descending)[0]
+                write-output "ServerNano: $nanoversion"
+                Write-Output ("##vso[task.setvariable variable=nanoversion;]$nanoversion")
+        
   - stage: buildAndPush
     jobs:
       - job: DockerBuild
