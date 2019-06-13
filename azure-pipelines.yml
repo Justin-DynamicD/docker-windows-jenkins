@@ -16,7 +16,7 @@ variables:
 stages:
   - stage: gatherCurrentBuildInfo
     jobs:
-      - job: Gather Current Releases
+      - job: GatherCurrentReleases
         pool:
           vmImage: 'windows-2019'
         steps:
