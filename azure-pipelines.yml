@@ -35,7 +35,7 @@ stages:
             condition: succeeded()
             inputs:
               command: build
-              arguments: --build-arg VERSIONNANO=$(versionNano)
+              arguments: --build-arg VERSIONNANO=1803 #$(versionNano)
               repository: $(dockerrepo)
               tags: |
                 latest
