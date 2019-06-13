@@ -35,7 +35,7 @@ stages:
             condition: succeeded()
             inputs:
               command: build
-              arguments: --build-arg VERSIONNANO=$(versionNano)
+              # arguments: --build-arg VERSIONNANO=$(versionNano)
           - task: Docker@2
             displayName: Push
             condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
