@@ -23,7 +23,7 @@ stages:
           - task: PowerShell@2
             displayName: Get Latest Version of NanoServer
             inputs:
-              script: .\scripts\getnanoversion.ps1
+              filepath: .\scripts\getnanoversion.ps1
   - stage: buildAndPush
     jobs:
       - job: DockerBuild
