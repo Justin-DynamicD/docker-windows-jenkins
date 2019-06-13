@@ -55,4 +55,6 @@ stages:
             inputs:
               command: push
               repository: $(dockerrepo)
-              tags: v$(majorMinorVersion).$(semanticVersion)
+              tags: |
+                latest
+                $(versionNano)
