@@ -2,8 +2,12 @@
 # start builder
 ###
 
+# get args
+ARG VERSIONNANO=1809
+ARG VERSIONJENKINS=latest
+
 # builder is running core, as nano does not support msi nor gui-dependant exe installers
-FROM mcr.microsoft.com/windows/servercore:1809 as builder
+FROM mcr.microsoft.com/windows/servercore:${VERSIONNANO} as builder 
 
 #Download and install Java 8.  This is pre-OpenJDK.
 ADD http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185 C:/install/jre.exe
@@ -25,7 +29,7 @@ RUN C:\java\bin\keytool -import -alias letsencryptauthorityx4b -keystore C:\java
 # start nano container
 ###
 
-FROM mcr.microsoft.com/windows/nanoserver:1809
+FROM mcr.microsoft.com/windows/nanoserver:${VERSIONNANO}
 
 # Copy Java from builder and configure
 COPY --from=builder C:/java C:/java/1.8.0_91
@@ -36,7 +40,7 @@ ENV JAVA_TOOL_OPTIONS -Djava.awt.headless=true
 ENV PATH C:\\java\\1.8.0_91\\bin;C:\\Windows\\system32;C:\\Windows;
 
 # Download and configure Jenkins
-ADD http://mirrors.jenkins.io/war-stable/latest/jenkins.war C:/jenkins/jenkins.war
+ADD http://mirrors.jenkins.io/war-stable/${VERSIONJENKINS}/jenkins.war C:/jenkins/jenkins.war
 ENV JENKINS_HOME c:\\jenkins_home
 
 # bootstrap jenkins at startup
