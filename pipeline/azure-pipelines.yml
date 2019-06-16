@@ -30,7 +30,7 @@ stages:
             condition: not(and(eq(variables['newBuild'], 'False'), eq(variables['Build.Reason'], 'Schedule')))
             inputs:
               command: build
-              arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=latest
+              arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS="$(versionJenkins)"
               repository: $(dockerrepo)
               tags: |
                 latest
