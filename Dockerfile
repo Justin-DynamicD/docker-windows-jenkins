@@ -4,6 +4,7 @@
 
 # get args
 ARG VERSIONNANO=1809
+ARG VERSIONJENKINS=latest
 
 # builder is running core, as nano does not support msi nor gui-dependant exe installers
 FROM mcr.microsoft.com/windows/servercore:${VERSIONNANO} as builder 
@@ -39,7 +40,7 @@ ENV JAVA_TOOL_OPTIONS -Djava.awt.headless=true
 ENV PATH C:\\java\\1.8.0_91\\bin;C:\\Windows\\system32;C:\\Windows;
 
 # Download and configure Jenkins
-ADD http://mirrors.jenkins.io/war-stable/latest/jenkins.war C:/jenkins/jenkins.war
+ADD http://mirrors.jenkins.io/war-stable/${VERSIONJENKINS}/jenkins.war C:/jenkins/jenkins.war
 ENV JENKINS_HOME c:\\jenkins_home
 
 # bootstrap jenkins at startup
