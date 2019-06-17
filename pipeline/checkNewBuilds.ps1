@@ -1,4 +1,5 @@
 param (
+  [string]$minorVer = "1",
   [string]$url = "http://mirrors.jenkins.io/war-stable",
   [string]$file = "jenkins.war",
   [string]$githubAPI = "https://api.github.com",
@@ -26,7 +27,7 @@ Write-Output "Latest Jenkins Online: $onlineLatest"
 # Two vars are set: the first works within the job scope so the correct version gets installed.
 # We also update the build number of the pipeline to contain this info during tagging
 Write-Output "##vso[task.setvariable variable=versionJenkins;]$onlineLatest"
-Write-Output "##vso[build.updatebuildnumber]$onlineLatest_$(build.buildNumber)"
+Write-Output "##vso[build.updatebuildnumber]$($onlineLatest).$($minorVer)"
 
 # Check GitHub Tags for releases
 $buildVersions = ((invoke-webrequest "$($githubAPI)/repos/$($githubOwner)/$($githubRepo)/releases" -UseBasicParsing).Content | ConvertFrom-Json).tag_name
