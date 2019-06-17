@@ -30,11 +30,9 @@ stages:
             condition: not(and(eq(variables['newBuild'], 'False'), eq(variables['Build.Reason'], 'Schedule')))
             inputs:
               command: build
-              arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$(versionJenkins)
+              arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=latest
               repository: $(dockerrepo)
-              tags: |
-                latest
-                $(versionJenkins)
+              tags: v$(versionJenkins)
       - job: PushArtifact
         dependsOn: DockerBuild
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -51,6 +49,4 @@ stages:
             inputs:
               command: push
               repository: $(dockerrepo)
-              tags: |
-                latest
-                $(versionJenkins)
+              tags: v$(versionJenkins)
