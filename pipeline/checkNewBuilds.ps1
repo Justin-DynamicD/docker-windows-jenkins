@@ -43,7 +43,7 @@ $buildLatest = [string]($formattedVersions | Sort-Object -Descending)[0]
 Write-Output "Latest Jenkins built: $buildLatest"
 
 # Set variable baed on if latest has already been built
-If ($buildVersions -contains $onlineLatest) {
+If ($buildVersions -match $onlineLatest) {
   Write-Output "build $onlineLatest already exists"
   Write-Output "##vso[task.setvariable variable=newBuild;]$false"
 }
