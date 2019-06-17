@@ -13,7 +13,14 @@ $ErrorActionPreference = "Stop"
 # Check Online for latest version
 $results = (Invoke-WebRequest $url -UseBasicParsing).links
 $onlineVersions = ($results.href | Where-Object { $_ -ne "latest/" }).trimend("/")
-$onlineLatest = (($onlineVersions | Sort-object -Descending)[0])
+[System.Collections.ArrayList]$formattedVersions = @()
+$onlineVersions | ForEach-Object {
+  try {
+    $formattedVersions.add([version]$_) | Out-Null
+  }
+  catch{}
+}
+$onlineLatest = [string]($formattedVersions | Sort-Object -Descending)[0]
 Write-Output "Latest Jenkins Online: $onlineLatest"
 Write-Output "##vso[task.setvariable variable=versionJenkins;]$onlineLatest"
 
@@ -23,8 +30,8 @@ $buildLatest = (($buildVersions | Sort-Object -Descending)[0])
 Write-Output "Latest Jenkins built: $buildLatest"
 
 # Set variable baed on if latest has already been built
-If ($buildLatest -contains $onlineLatest) {
-  Write-Output "Latest build already exists"
+If ($buildVersions -contains $onlineLatest) {
+  Write-Output "build $onlineLatest already exists"
   Write-Output "##vso[task.setvariable variable=newBuild;]$false"
 }
 else {
