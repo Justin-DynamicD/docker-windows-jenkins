@@ -30,8 +30,16 @@ Write-Output "##vso[task.setvariable variable=versionJenkins;]$onlineLatest"
 Write-Output "##vso[build.updatebuildnumber]$($onlineLatest).$($minorVer)"
 
 # Check GitHub Tags for releases
-$buildVersions = ((invoke-webrequest "$($githubAPI)/repos/$($githubOwner)/$($githubRepo)/releases" -UseBasicParsing).Content | ConvertFrom-Json).tag_name
-$buildLatest = (($buildVersions | Sort-Object -Descending)[0])
+$buildVersions = ((invoke-webrequest "$($githubAPI)/repos/$($githubOwner)/$($githubRepo)/tags" -UseBasicParsing).Content | ConvertFrom-Json).name
+[System.Collections.ArrayList]$formattedVersions = @()
+$buildVersions | ForEach-Object {
+  try {
+    [version]$updatedVer = ($_).trim("v")
+    $formattedVersions.add($updatedVer) | Out-Null
+  }
+  catch{}
+}
+$buildLatest = [string]($formattedVersions | Sort-Object -Descending)[0]
 Write-Output "Latest Jenkins built: $buildLatest"
 
 # Set variable baed on if latest has already been built
@@ -43,16 +51,3 @@ else {
   Write-Output "New build required"
   Write-Output "##vso[task.setvariable variable=newBuild;]$true"
 }
-
-
-
-
-
-
-
-# Write-Output "ServerNano: $versionnano"
-# Write-Host "##vso[task.setvariable variable=versionNano;]$versionnano"
-
-
-
-# http://mirrors.jenkins.io/war-stable/latest/jenkins.war
