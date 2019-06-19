@@ -50,7 +50,7 @@ stages:
               tags: v$(versionJenkins)
           - task: Docker@2
             displayName: Push Artifact
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['newBuild'], 'True')
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['newBuild'], 'True'))
             inputs:
               command: push
               repository: $(dockerrepo)
