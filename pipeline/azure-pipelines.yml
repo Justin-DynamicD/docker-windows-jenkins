@@ -4,16 +4,15 @@
 # https://aka.ms/yaml
 
 trigger:
-  branches:
-    include:
+  - master
+
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Daily Midnight Check
+    branches:
+      include:
       - master
-  schedules:
-    - cron: "0 0 * * *"
-      displayName: Daily Midnight Check
-      branches:
-        include:
-        - master
-      always: true
+    always: true
 
 variables: 
   dockerrepo: dynamicd/winjenkins
