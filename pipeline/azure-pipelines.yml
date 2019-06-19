@@ -8,10 +8,10 @@ trigger:
 
 schedules:
   - cron: "0 0 * * *"
-    displayName: Daily Midnight Check
+    displayName: Daily Check
     branches:
       include:
-      - master
+        - master
     always: true
 
 variables: 
@@ -42,7 +42,7 @@ stages:
               containerRegistry: DockerHub
           - task: Docker@2
             displayName: Build Container
-            condition: and(succeeded(), not(and(eq(variables['newBuild'], 'False'), eq(variables['Build.Reason'], 'Schedule'))))
+            condition: and(succeeded(), or(eq(variables['newBuild'], 'True'), eq(variables['Build.Reason'], 'PullRequest')))
             inputs:
               command: build
               arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$(versionJenkins)
