@@ -3,11 +3,11 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-#trigger:
-#  - master
+trigger:
+  - master
 
 schedules:
-  - cron: '*/10 * * * *'
+  - cron: '0 0 * * *'
     displayName: Daily Check
     branches:
       include:
