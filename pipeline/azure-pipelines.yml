@@ -55,3 +55,17 @@ stages:
               command: push
               repository: $(dockerrepo)
               tags: v$(versionJenkins)
+          - task: GitHubRelease@0
+            displayName: Tag release info in GitHub
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['newBuild'], 'True'))
+            inputs:
+              gitHubConnection: GitHub
+              repositoryName: '$(Build.Repository.Name)'
+              action: 'create'
+              target: '$(Build.SourceVersion)'
+              tagSource: 'auto'
+              title: 'v$(versionJenkins)'
+              releaseNotesSource: 'input'
+              releaseNotes: 'Jenkins Version: $(versionJenkins)
+                Nano Version: $(versionNano)'
+              addChangeLog: false
