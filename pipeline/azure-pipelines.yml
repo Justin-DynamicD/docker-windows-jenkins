@@ -37,7 +37,9 @@ jobs:
         displayName: Generate Build_Arguments
         inputs:
           targetType: inline
-          script: echo "##vso[task.setvariable variable=buildArg;isOutput=true]--build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$(versionJenkins)"
+          script: write-output "##vso[task.setvariable variable=buildArg;isOutput=true]--build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$env:JENKINSVER"
+        env:
+          JENKINSVER: $[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
 
   - template: docker_container.yml@templates
     parameters:
