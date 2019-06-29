@@ -26,6 +26,7 @@ Write-Output "Latest Jenkins Online: $onlineLatest"
 
 # Two vars are set: the first works within the job scope so the correct version gets installed.
 # We also update the build number of the pipeline to contain this info during tagging
+Write-Output "##vso[task.setvariable variable=versionJenkins;]$onlineLatest"
 Write-Output "##vso[task.setvariable variable=versionJenkins;isOutput=true]$onlineLatest"
 Write-Output "##vso[build.updatebuildnumber]$($onlineLatest).$($minorVer)"
 
