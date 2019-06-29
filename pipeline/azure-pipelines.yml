@@ -35,7 +35,7 @@ jobs:
 
   - template: docker_container.yml@templates
     parameters:
-      Build_Arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
+      Build_Arguments: --build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=${{ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] }}
       Container_Name: winjenkins
       Container_Version: $[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
       dependsOn: getJenkinsVer
