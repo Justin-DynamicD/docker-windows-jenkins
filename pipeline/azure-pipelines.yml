@@ -32,10 +32,16 @@ jobs:
         inputs:
           filepath: pipeline\checkNewBuilds.ps1
           arguments: -minorVer $(semanticVersion)
+      - task: PowerShell@2
+        name: generateBA
+        displayName: Generate Build_Arguments
+        inputs:
+          targetType: inline
+          script: echo "##vso[task.setvariable variable=buildArg;isOutput=true]--build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$(versionJenkins)"
 
   - template: docker_container.yml@templates
     parameters:
-      Build_Arguments: '--build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]'
+      Build_Arguments: $[ dependencies.getJenkinsVer.outputs['generateBA.buildArg'] ]
       Container_Name: winjenkins
       Container_Version: $[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
       dependsOn: getJenkinsVer
