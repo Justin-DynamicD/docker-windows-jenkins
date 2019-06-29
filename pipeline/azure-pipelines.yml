@@ -28,7 +28,7 @@ jobs:
     steps:
       - task: PowerShell@2
         name: checkJenkins
-        displayName: Check available Jenkins versions
+        displayName: Check available Jenkins version
         inputs:
           filepath: pipeline\checkNewBuilds.ps1
           arguments: -minorVer $(semanticVersion)
