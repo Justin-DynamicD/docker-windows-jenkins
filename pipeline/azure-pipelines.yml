@@ -45,10 +45,10 @@ jobs:
             write-output "##vso[task.setvariable variable=buildArguments;isOutput=true]$myargs"
 
   - template: docker_container.yml@templates
-    parameters: 
-      Build_Arguments: $[ dependencies.getJenkinsVer.outputs['checkJenkins.buildArguments'] ]
+    parameters:
       Container_Name: winjenkins
       Container_Version: $[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
+      Build_Arguments: $[ dependencies.getJenkinsVer.outputs['generateBA.buildArguments'] ]
       dependsOn: getJenkinsVer
       NewBuild: $[ dependencies.getJenkinsVer.outputs['checkJenkins.newBuild'] ]
       Pool: 'windows-2019'
