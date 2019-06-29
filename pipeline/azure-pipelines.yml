@@ -41,6 +41,7 @@ jobs:
           script: |
             $myargs = "--build-arg VERSIONNANO=$(versionNano) --build-arg VERSIONJENKINS=$(versionJenkins)"
             write-output $myargs
+            write-output "##vso[task.setvariable variable=buildArguments;=true]$myargs"
             write-output "##vso[task.setvariable variable=buildArguments;isOutput=true]$myargs"
 
   - template: docker_container.yml@templates
