@@ -33,10 +33,10 @@ jobs:
           arguments: -minorVer $(semanticVersion)
 
   - template: docker_container.yml@templates
-    dependsOn: getJenkinsVer
     parameters:
       Build_Arguments: --build-arg VERSIONJENKINS=$[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
       Container_Name: winjenkins
       Container_Version: $[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
+      dependsOn: getJenkinsVer
       NewBuild: $[ dependencies.getJenkinsVer.outputs['checkJenkins.newBuild'] ]
       Pool: 'windows-2019'
