@@ -26,7 +26,7 @@ Write-Output "Latest Jenkins Online: $onlineLatest"
 
 # Two vars are set: the first works within the job scope so the correct version gets installed.
 # We also update the build number of the pipeline to contain this info during tagging
-Write-Output "##vso[task.setvariable variable=versionJenkins;]$onlineLatest"
+Write-Output "##vso[task.setvariable variable=versionJenkins;isOutput=true]$onlineLatest"
 Write-Output "##vso[build.updatebuildnumber]$($onlineLatest).$($minorVer)"
 
 # Check GitHub Tags for releases
@@ -45,9 +45,9 @@ Write-Output "Latest Jenkins built: $buildLatest"
 # Set variable baed on if latest has already been built
 If ($buildVersions -match $onlineLatest) {
   Write-Output "build $onlineLatest already exists"
-  Write-Output "##vso[task.setvariable variable=newBuild;]$false"
+  Write-Output "##vso[task.setvariable variable=newBuild;isOutput=true]$false"
 }
 else {
   Write-Output "New build required"
-  Write-Output "##vso[task.setvariable variable=newBuild;]$true"
+  Write-Output "##vso[task.setvariable variable=newBuild;isOutput=true]$true"
 }
