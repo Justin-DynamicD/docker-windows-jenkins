@@ -46,7 +46,7 @@ jobs:
 
   - template: docker_container.yml@templates
     parameters: 
-      Build_Arguments: $[ dependencies.getJenkinsVer.outputs['generateBA.buildArguments'] ]
+      Build_Arguments: $[ dependencies.getJenkinsVer.outputs['checkJenkins.buildArguments'] ]
       Container_Name: winjenkins
       Container_Version: $[ dependencies.getJenkinsVer.outputs['checkJenkins.versionJenkins'] ]
       dependsOn: getJenkinsVer

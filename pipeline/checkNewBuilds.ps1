@@ -54,3 +54,8 @@ else {
   Write-Output "##vso[task.setvariable variable=newBuild;]$true"
   Write-Output "##vso[task.setvariable variable=newBuild;isOutput=true]$true"
 }
+
+$myargs = "--build-arg VERSIONNANO=1809 --build-arg VERSIONJENKINS=$onlineLatest"
+write-output "Setting build args: $myargs"
+write-output "##vso[task.setvariable variable=buildArguments;]$myargs"
+write-output "##vso[task.setvariable variable=buildArguments;isOutput=true]$myargs"
