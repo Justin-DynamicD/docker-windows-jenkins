@@ -1,6 +1,6 @@
 # docker-windows-jenkins
 
-[![Build Status](https://dev.azure.com/jkingXell/Dockerize%20Windows/_apis/build/status/Justin-DynamicD.docker-windows-jenkins?branchName=master)](https://dev.azure.com/jkingXell/Dockerize%20Windows/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/Justin-DynamicD/GitHubPipelines/_apis/build/status/Justin-DynamicD.docker-windows-jenkins?branchName=master)](https://dev.azure.com/Justin-DynamicD/GitHubPipelines/_build/latest?definitionId=1&branchName=master)
 
 Dockerfile for creating Jenkins in Windows container.
 
