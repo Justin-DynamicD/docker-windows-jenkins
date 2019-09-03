@@ -45,6 +45,7 @@ ENV JAVA_TOOL_OPTIONS -Djava.awt.headless=true
 ENV PATH C:\\java\\1.8.0_91\\bin;C:\\Windows\\system32;C:\\Windows;
 
 # Copy and configure Jenkins
+RUN mkdir C:\jenkins
 COPY --from=builder C:/install/jenkins.war C:/jenkins/jenkins.war
 ENV JENKINS_HOME c:\\jenkins_home
 
